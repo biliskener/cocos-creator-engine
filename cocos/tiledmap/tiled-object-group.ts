@@ -420,7 +420,7 @@ export class TiledObjectGroup extends Component {
             }
 
             const sp = imgNode.getComponent(Sprite)!;
-            const spf = sp.spriteFrame!;
+            const spf = grid.spriteFrame.clone();
 
             spf.rotated = grid._rotated!;
             spf.rect = grid._rect!;
