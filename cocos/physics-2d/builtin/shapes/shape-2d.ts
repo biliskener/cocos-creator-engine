@@ -5,6 +5,7 @@ import { BuiltinPhysicsWorld } from '../builtin-world';
 
 export class BuiltinShape2D implements IBaseShape {
     protected _collider: Collider2D | null = null;
+    protected _activated: boolean = false;
 
     protected _worldAabb = new Rect();
 
@@ -29,10 +30,12 @@ export class BuiltinShape2D implements IBaseShape {
 
     onEnable () {
         (PhysicsSystem2D.instance.physicsWorld as BuiltinPhysicsWorld).addShape(this);
+        this._activated = true;
     }
 
     onDisable () {
         (PhysicsSystem2D.instance.physicsWorld as BuiltinPhysicsWorld).removeShape(this);
+        this._activated = false;
     }
 
     start () {
@@ -60,6 +63,7 @@ export class BuiltinShape2D implements IBaseShape {
     }
 
     onGroupChanged () {
+        if(!this._activated) return;
         (PhysicsSystem2D.instance.physicsWorld as BuiltinPhysicsWorld).updateShapeGroup(this);
     }
 }
